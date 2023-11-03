@@ -56,7 +56,7 @@ func (client *Client) HTTPGet(uri string) (resp []byte, err error) {
 	return client.httpDo(req)
 }
 
-//HTTPPost POST 请求
+// HTTPPost POST 请求
 func (client *Client) HTTPPost(uri string, payload io.Reader, contentType string) (resp []byte, err error) {
 	newUrl, err := client.applyAccessToken(uri)
 	if err != nil {
@@ -73,7 +73,7 @@ func (client *Client) HTTPPost(uri string, payload io.Reader, contentType string
 	return client.httpDo(req)
 }
 
-//httpDo 执行 请求
+// httpDo 执行 请求
 func (client *Client) httpDo(req *http.Request) (resp []byte, err error) {
 	req.Header.Add("User-Agent", UserAgent)
 
@@ -183,7 +183,8 @@ func responseFilter(response *http.Response) (resp []byte, err error) {
 	}{}
 	err = json.Unmarshal(resp, &errorResponse)
 	if err != nil {
-		return
+		// 有的正常请求没有返回 errcode
+		return resp, nil
 	}
 
 	// 40001(覆盖刷新超过5min后，使用旧 access_token 报错) 获取 access_token 时 AppSecret 错误，或者 access_token 无效。请开发者认真比对 AppSecret 的正确性，或查看是否正在为恰当的公众号调用接口
