@@ -33,7 +33,7 @@ type PhoneNumber struct {
 	PhoneInfo struct {
 		PhoneNumber     string `json:"phoneNumber"`
 		PurePhoneNumber string `json:"purePhoneNumber"`
-		CountryCode     int    `json:"countryCode"`
+		CountryCode     string `json:"countryCode"`
 		Watermark       struct {
 			Timestamp int    `json:"timestamp"`
 			Appid     string `json:"appid"`
